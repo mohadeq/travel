@@ -1,8 +1,6 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
 // Styled components for styling
 const FormContainer = styled.div`
@@ -105,21 +103,16 @@ const ModalContent = styled.div`
 //   },
 // ];
 
-
-
 const Form = () => {
- 
   const [hotels, setHotels] = useState([]);
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    checkInDate: '',
-    checkOutDate: '',
-    selectedHotelId: '',
+    name: "",
+    email: "",
+    checkInDate: "",
+    checkOutDate: "",
+    selectedHotelId: "",
   });
-
-  
 
   const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -137,7 +130,6 @@ const Form = () => {
   //   const selectedRoomType = e.target.value;
   //   setFormData({ ...formData, selectedRoomType });
   // };
-  
 
   // const selectedHotel = ""//hotels.find((hotel) => hotel._id === formData.selectedHotelId);
   // const selectedRoom = selectedHotel?.roomTypes.find(
@@ -155,40 +147,39 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     
+
     const res = axios.post("http://localhost:8000/api/booking", formData);
-    if (res){
-      alert("Data saved Successfully")
+    if (res) {
+      alert("Data saved Successfully");
       setFormData({
-        name: '',
-        email: '',
-        checkInDate: '',
-        checkOutDate: '',
-        selectedHotelId: '',
-      })
-      setShowConfirmation(false)
-    }else{
-      console.log("Error")
+        name: "",
+        email: "",
+        checkInDate: "",
+        checkOutDate: "",
+        selectedHotelId: "",
+      });
+      setShowConfirmation(false);
+    } else {
+      console.log("Error");
     }
   };
 
-  
   // const navigate = useNavigate()
 
-  const loadHotels = async ()=>{
+  const loadHotels = async () => {
     const res = await axios.get("http://localhost:8000/api/hotels");
-    console.log(res.data)
-    setHotels(res.data)
-  }
+    console.log(res.data);
+    setHotels(res.data);
+  };
 
-  useEffect(()=>{
-    loadHotels()
-  },[])
+  useEffect(() => {
+    loadHotels();
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormContainer >
-        <FormTitle >Hotel Booking</FormTitle>
+      <FormContainer>
+        <FormTitle>Hotel Booking</FormTitle>
         <BookingForm onSubmit={handleSubmit}>
           <FormGroup>
             <Label>Name</Label>
@@ -212,24 +203,24 @@ const Form = () => {
             />
           </FormGroup>
           <FormGroup>
-    <Label>Check-in date</Label>
-  <Input
-    type="date"
-    name="checkInDate" // Remove spaces in the name attribute
-    value={formData.checkInDate}
-    onChange={handleInputChange}
-  />
-</FormGroup>
+            <Label>Check-in date</Label>
+            <Input
+              type="date"
+              name="checkInDate" // Remove spaces in the name attribute
+              value={formData.checkInDate}
+              onChange={handleInputChange}
+            />
+          </FormGroup>
 
           <FormGroup>
-  <Label>Check-out date</Label>
-  <Input
-    type="date"
-    name="checkOutDate" // Remove spaces in the name attribute
-    value={formData.checkOutDate}
-    onChange={handleInputChange}
-  />
-</FormGroup>
+            <Label>Check-out date</Label>
+            <Input
+              type="date"
+              name="checkOutDate" // Remove spaces in the name attribute
+              value={formData.checkOutDate}
+              onChange={handleInputChange}
+            />
+          </FormGroup>
 
           {/* <Select name="selectedHotelId" onChange={handleHotelChange}>
           {hotels.map((hotel) => (
@@ -238,19 +229,19 @@ const Form = () => {
             </option>
           ))}
         </Select> */}
-        
+
           {/* Add more form fields for check-in date, check-out date, hotel selection, and room type */}
           <FormGroup>
             <Label>Select Hotel</Label>
             <Select name="selectedHotelId" onChange={handleHotelChange}>
-          {hotels.map((hotel) => (
-            <option key={hotel._id} value={hotel._id}>
-              {hotel.name} - {"$ "+hotel.price}
-            </option>
-          ))}
-        </Select>
-       
-        {/* <Select name="selectedRoomType" onChange={handleRoomTypeChange}>
+              {hotels.map((hotel) => (
+                <option key={hotel._id} value={hotel._id}>
+                  {hotel.name} - {"$ " + hotel.price}
+                </option>
+              ))}
+            </Select>
+
+            {/* <Select name="selectedRoomType" onChange={handleRoomTypeChange}>
           {selectedHotel?.roomTypes.map((roomType) => (
             <option key={roomType.type} value={roomType.type}>
               {roomType.type}
@@ -263,8 +254,10 @@ const Form = () => {
             <p>Number of Rooms: {selectedRoom.rooms}</p>
           </div>
         )} */}
-        </FormGroup>
-          <Button type="button" onClick={showConfirm}>Book Hotel</Button>
+          </FormGroup>
+          <Button type="button" onClick={showConfirm}>
+            Book Hotel
+          </Button>
         </BookingForm>
       </FormContainer>
       {/* Display the confirmation modal if showConfirmation is true */}
@@ -278,7 +271,9 @@ const Form = () => {
             <p>Check-Out Date: {formData.checkOutDate}</p>
             <p>Selected Hotel: {"selectedHotel"}</p>
             <Button onClick={handleConfirmationClose}>Close</Button>
-            <Button type="submit" style={{marginLeft:"30px"}}>Save</Button>
+            <Button type="submit" style={{ marginLeft: "30px" }}>
+              Save
+            </Button>
           </ModalContent>
         </ConfirmationModal>
       )}
